@@ -9,24 +9,40 @@ class AppCubit extends Cubit<AppStates> {
 
   static AppCubit get(context) => BlocProvider.of(context);
 
-  List<OrderDataModel> allOrders = [];
+  List<String> orderOngoingStatus = ['Pending', 'Preparing', 'Shipped'];
+  List<String> orderPostStatus = ['Delivered', 'Cancelled', 'Picked'];
   List<OrderDataModel> allOngoingOrders = [];
   List<OrderDataModel> allPostOrders = [];
   List<String> ongoingOrderDocumentId = [];
-  void getAllOrders() {
+  void getAllOngoingOrders() {
     FirebaseFirestore.instance
         .collection('orders')
         .orderBy('orderNumber', descending: true)
+        .where("orderStatus", whereIn: orderOngoingStatus)
         .snapshots()
         .listen((event) {
-      allOrders = [];
       allOngoingOrders = [];
-      allPostOrders = [];
       ongoingOrderDocumentId = [];
       for (var element in event.docs) {
-        allOrders.add(OrderDataModel.fromJson(element.data()));
+        allOngoingOrders.add(OrderDataModel.fromJson(element.data()));
+        ongoingOrderDocumentId.add(element.id);
       }
-      emit(AppGetAllOrdersSuccessState());
+      emit(AppGetAllOngoingOrdersSuccessState());
+    });
+  }
+
+  void getAllPostOrders() {
+    FirebaseFirestore.instance
+        .collection('orders')
+        .orderBy('orderNumber', descending: true)
+        .where("orderStatus", whereIn: orderPostStatus)
+        .snapshots()
+        .listen((event) {
+      allPostOrders = [];
+      for (var element in event.docs) {
+        allPostOrders.add(OrderDataModel.fromJson(element.data()));
+      }
+      emit(AppGetAllPostOrdersSuccessState());
     });
   }
 

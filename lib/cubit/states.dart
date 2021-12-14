@@ -4,7 +4,9 @@ class AppInitialState extends AppStates {}
 
 class AppRefreshState extends AppStates {}
 
-class AppGetAllOrdersSuccessState extends AppStates {}
+class AppGetAllOngoingOrdersSuccessState extends AppStates {}
+
+class AppGetAllPostOrdersSuccessState extends AppStates {}
 
 class AppUpdateOrderStatusSuccessState extends AppStates {}
 

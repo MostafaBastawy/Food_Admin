@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/cubit.dart';
@@ -15,7 +16,8 @@ class HomeLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppCubit cubit = AppCubit.get(context);
-    cubit.getAllOrders();
+    cubit.getAllOngoingOrders();
+    cubit.getAllPostOrders();
     return BlocBuilder<AppCubit, AppStates>(
       builder: (BuildContext context, Object? state) => Scaffold(
         appBar: AppBar(
@@ -74,24 +76,39 @@ class HomeLayoutScreen extends StatelessWidget {
               ),
             ),
             if (ongoingOrders)
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) =>
-                      OngoingOrders(
-                    orderDataModel: cubit.allOngoingOrders[index],
-                    index: index,
+              ConditionalBuilder(
+                condition: cubit.allOngoingOrders.isNotEmpty,
+                builder: (BuildContext context) => Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, int index) =>
+                        OngoingOrders(
+                      orderDataModel: cubit.allOngoingOrders[index],
+                      index: index,
+                    ),
+                    itemCount: cubit.allOngoingOrders.length,
                   ),
-                  itemCount: cubit.allOngoingOrders.length,
+                ),
+                fallback: (BuildContext context) => const Padding(
+                  padding: EdgeInsetsDirectional.only(top: 200.0),
+                  child: Text('There is no ongoing orders'),
                 ),
               ),
             if (pastOrders)
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) => PastOrders(
-                    orderDataModel: cubit.allPostOrders[index],
-                    index: index,
+              ConditionalBuilder(
+                condition: cubit.allPostOrders.isNotEmpty,
+                builder: (BuildContext context) => Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, int index) =>
+                        PastOrders(
+                      orderDataModel: cubit.allPostOrders[index],
+                      index: index,
+                    ),
+                    itemCount: cubit.allPostOrders.length,
                   ),
-                  itemCount: cubit.allPostOrders.length,
+                ),
+                fallback: (BuildContext context) => const Padding(
+                  padding: EdgeInsetsDirectional.only(top: 200.0),
+                  child: Text('There is no post orders'),
                 ),
               ),
           ],
