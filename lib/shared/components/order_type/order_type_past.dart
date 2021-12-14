@@ -142,7 +142,8 @@ class PastOrders extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(15.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
