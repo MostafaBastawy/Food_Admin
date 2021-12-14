@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/cubit.dart';
@@ -141,7 +142,6 @@ class PastOrders extends StatelessWidget {
               ),
             ),
             Container(
-              width: double.infinity,
               padding: const EdgeInsets.all(15.0),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -151,15 +151,40 @@ class PastOrders extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              child: Text(
-                'Order Status: Order ${cubit.allPostOrders[index!].orderStatus}',
-                style: TextStyle(
-                  color: cubit.allPostOrders[index!].orderStatus == 'Cancelled'
-                      ? Colors.red
-                      : priceColor,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Order Status: Order ${cubit.allPostOrders[index!].orderStatus}',
+                    style: TextStyle(
+                      color:
+                          cubit.allPostOrders[index!].orderStatus == 'Cancelled'
+                              ? Colors.red
+                              : priceColor,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    height: 31.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(color: defaultColor, width: 2.0),
+                    ),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'View Details',
+                        style: TextStyle(
+                          color: defaultColor,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
