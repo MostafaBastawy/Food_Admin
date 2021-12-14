@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_cubit.dart';
+import 'package:food_admin_interface/modules/authentication_screen/authentication_screen.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_states.dart';
 import 'package:food_admin_interface/modules/home_layout_screen.dart';
 import 'package:food_admin_interface/shared/components/navigator.dart';
@@ -9,7 +10,6 @@ import 'package:food_admin_interface/shared/components/show_toaster.dart';
 import 'package:food_admin_interface/shared/constants.dart';
 import 'package:food_admin_interface/shared/design/colors.dart';
 import 'package:food_admin_interface/shared/shared_preferences.dart';
-
 
 class DefaultDrawer extends StatelessWidget {
   const DefaultDrawer({Key? key}) : super(key: key);
@@ -25,25 +25,25 @@ class DefaultDrawer extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 navigateAndFinish(
-                  widget: const HomeLayoutScreen(),
+                  widget: HomeLayoutScreen(),
                   context: context,
                 );
               },
               child: Column(
                 children: const [
-                   Padding(
-                    padding:  EdgeInsetsDirectional.only(
-                        top: 40.0, bottom: 10.0),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.only(top: 40.0, bottom: 10.0),
                     child: CircleAvatar(
                       radius: 60.0,
                       backgroundImage: NetworkImage(defaultProfileImage),
                     ),
                   ),
                   Text(
-                    '',
+                    'Admin',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.0,
                     ),
@@ -61,7 +61,38 @@ class DefaultDrawer extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                navigateAndFinish(widget: const HomeLayoutScreen(), context: context);
+                navigateAndFinish(widget: HomeLayoutScreen(), context: context);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 10.0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      height: 30.0,
+                      width: 30.0,
+                      child: Image.asset(
+                        'assets/images/myorders-icon.png',
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsetsDirectional.only(start: 20.0),
+                      child: Text(
+                        'All Orders',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 17.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                navigateAndFinish(widget: HomeLayoutScreen(), context: context);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -91,37 +122,6 @@ class DefaultDrawer extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                navigateAndFinish(widget: const HomeLayoutScreen(), context: context);
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10.0),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 30.0,
-                      width: 30.0,
-                      child: Image.asset(
-                        'assets/images/myorders-icon.png',
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsetsDirectional.only(start: 20.0),
-                      child: Text(
-                        'My Orders',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
               onTap: () {},
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -138,36 +138,7 @@ class DefaultDrawer extends StatelessWidget {
                     const Padding(
                       padding: EdgeInsetsDirectional.only(start: 20.0),
                       child: Text(
-                        'Offers',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10.0),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 30.0,
-                      width: 30.0,
-                      child: Image.asset(
-                        'assets/images/support-icon.png',
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsetsDirectional.only(start: 20.0),
-                      child: Text(
-                        'Support',
+                        'Daily Offers',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,
@@ -219,7 +190,7 @@ class DefaultDrawer extends StatelessWidget {
                     context: context,
                   );
                   navigateAndFinish(
-                    widget: const HomeLayoutScreen(),
+                    widget: AuthenticationScreen(),
                     context: context,
                   );
                 }
@@ -227,10 +198,6 @@ class DefaultDrawer extends StatelessWidget {
                   defaultToast(
                     message: state.error.substring(30),
                     color: Colors.red,
-                    context: context,
-                  );
-                  navigateTo(
-                    widget: const HomeLayoutScreen(),
                     context: context,
                   );
                 }

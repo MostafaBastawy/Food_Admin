@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_states.dart';
 
-
 class AppAuthenticationCubit extends Cubit<AppAuthenticationStates> {
   AppAuthenticationCubit() : super(AppAuthenticationInitialState());
   static AppAuthenticationCubit get(context) => BlocProvider.of(context);
@@ -27,13 +26,10 @@ class AppAuthenticationCubit extends Cubit<AppAuthenticationStates> {
 
   void userSignOut() {
     emit(AppAuthenticationLoadingState());
-
     FirebaseAuth.instance.signOut().then((value) {
       emit(AppAuthenticationSignOutSuccessState());
     }).catchError((error) {
       emit(AppAuthenticationSignOutErrorState(error.toString()));
     });
   }
-
-
 }

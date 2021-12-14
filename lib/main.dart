@@ -9,7 +9,7 @@ import 'package:food_admin_interface/modules/home_layout_screen.dart';
 import 'package:food_admin_interface/shared/design/themes.dart';
 import 'package:food_admin_interface/shared/shared_preferences.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await CacheHelper.init();
@@ -17,11 +17,13 @@ void main() async{
   String uid = CacheHelper.getData(key: 'uid') ?? '';
   Widget startScreen;
   uid.isNotEmpty
-      ? startScreen = const HomeLayoutScreen()
-      : startScreen = const HomeLayoutScreen();
-  runApp(MyApp(
-    startScreen: startScreen,
-  ));
+      ? startScreen = HomeLayoutScreen()
+      : startScreen = AuthenticationScreen();
+  runApp(
+    MyApp(
+      startScreen: startScreen,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,8 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (BuildContext context) => AppCubit()),
+        BlocProvider(create: (BuildContext context) => AppCubit()),
         BlocProvider(
             create: (BuildContext context) => AppAuthenticationCubit()),
       ],
@@ -42,9 +43,8 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: AuthenticationScreen(),
+        home: startScreen,
       ),
     );
   }
 }
-

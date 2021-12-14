@@ -32,8 +32,7 @@ class AuthenticationScreen extends StatelessWidget {
           );
           CacheHelper.setData(
               key: 'uid', value: FirebaseAuth.instance.currentUser!.uid);
-          navigateAndFinish(context: context, widget: const HomeLayoutScreen());
-          //AppCubit.get(context).getUserData();
+          navigateAndFinish(context: context, widget: HomeLayoutScreen());
         }
         if (state is AppAuthenticationLoginErrorState) {
           defaultToast(

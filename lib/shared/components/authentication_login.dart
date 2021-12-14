@@ -29,6 +29,9 @@ class LoginAuthentication extends StatelessWidget {
               if (value!.isEmpty) {
                 return '  Required*';
               }
+              if (value != 'admin@admin.com') {
+                return '  email address isn\'t correct*';
+              }
               String pattern = r'\w+@\w+\.\w+';
               if (!RegExp(pattern).hasMatch(value)) {
                 return '  invalid email address format';
