@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "855970483775",
+    "firebase_url": "https://food-user-1c179-default-rtdb.firebaseio.com",
+    "project_id": "food-user-1c179",
+    "storage_bucket": "food-user-1c179.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855970483775:android:76d0a2595c960a511ef28a",
+        "android_client_info": {
+          "package_name": "com.mostafabastawyy.food_admin_interface"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855970483775-81b3o0stisd2n8ddoc3ag27i3pdsgeho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4Epona7hSroZ-4dv1QEFO61v-kW2QCrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855970483775-81b3o0stisd2n8ddoc3ag27i3pdsgeho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "855970483775-0gfejqdqcj6u0esmnht0butkv46smf9e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mostafabastawyy.foodUserInterface"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855970483775:android:8df045ff2cae91fd1ef28a",
+        "android_client_info": {
+          "package_name": "com.mostafabastawyy.food_user_interface"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855970483775-imb0o413nrg07f82l22cbiv3776i5agl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mostafabastawyy.food_user_interface",
+            "certificate_hash": "e894b794bd26560b031e3052397d38b55518c422"
+          }
+        },
+        {
+          "client_id": "855970483775-81b3o0stisd2n8ddoc3ag27i3pdsgeho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4Epona7hSroZ-4dv1QEFO61v-kW2QCrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855970483775-81b3o0stisd2n8ddoc3ag27i3pdsgeho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "855970483775-0gfejqdqcj6u0esmnht0butkv46smf9e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mostafabastawyy.foodUserInterface"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
