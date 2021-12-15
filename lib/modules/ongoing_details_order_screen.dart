@@ -91,7 +91,7 @@ class OngoingDetailsOrderScreen extends StatelessWidget {
                             ),
                             SizedBox(
                               child: Text(
-                                'Total: \$ ${orderDataModel!.orderTotalValue}',
+                                '${orderDataModel!.orderPaymentMethod}',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 13.0,
