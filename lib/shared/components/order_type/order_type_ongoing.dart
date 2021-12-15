@@ -213,6 +213,7 @@ class OngoingOrders extends StatelessWidget {
                           navigateTo(
                             widget: OngoingDetailsOrderScreen(
                               orderDataModel: cubit.allOngoingOrders[index!],
+                              index: index,
                             ),
                             context: context,
                           );

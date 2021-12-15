@@ -9,14 +9,18 @@ import 'package:food_admin_interface/shared/design/colors.dart';
 class OngoingDetailsOrderScreen extends StatelessWidget {
   OrderDataModel? orderDataModel;
   int deliveryFee = 0;
+  int? index;
   OngoingDetailsOrderScreen({
     Key? key,
     required this.orderDataModel,
+    required this.index,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     AppCubit cubit = AppCubit.get(context);
+    cubit.getAllOngoingOrders();
+    cubit.getAllPostOrders();
     if (orderDataModel!.orderType == 'Delivery') {
       deliveryFee = 15;
     }
@@ -334,6 +338,30 @@ class OngoingDetailsOrderScreen extends StatelessWidget {
                 ),
               ),
               const DefaultDivider(),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 15.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    width: 1.0,
+                    color: Colors.grey[300]!,
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Text(
+                  'Order Status: Order ${cubit.allOngoingOrders[index!].orderStatus}',
+                  style: TextStyle(
+                    color: cubit.allOngoingOrders[index!].orderStatus ==
+                            'Cancelled'
+                        ? Colors.red
+                        : priceColor,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
