@@ -5,6 +5,7 @@ import 'package:food_admin_interface/modules/authentication_screen/authenticatio
 import 'package:food_admin_interface/modules/authentication_screen/authentication_screen.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_states.dart';
 import 'package:food_admin_interface/modules/home_layout_screen.dart';
+import 'package:food_admin_interface/modules/menu_screen.dart';
 import 'package:food_admin_interface/shared/components/navigator.dart';
 import 'package:food_admin_interface/shared/components/show_toaster.dart';
 import 'package:food_admin_interface/shared/constants.dart';
@@ -92,7 +93,7 @@ class DefaultDrawer extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                navigateAndFinish(widget: HomeLayoutScreen(), context: context);
+                navigateAndFinish(widget: const MenuScreen(), context: context);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
