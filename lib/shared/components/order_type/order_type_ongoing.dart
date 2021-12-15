@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/cubit.dart';
 import 'package:food_admin_interface/cubit/states.dart';
 import 'package:food_admin_interface/models/order_model.dart';
-import 'package:food_admin_interface/modules/ongoing_details_order_screen.dart';
+import 'package:food_admin_interface/modules/order_details_screen.dart';
 import 'package:food_admin_interface/shared/components/navigator.dart';
 import 'package:food_admin_interface/shared/design/colors.dart';
 
@@ -211,7 +211,7 @@ class OngoingOrders extends StatelessWidget {
                       child: TextButton(
                         onPressed: () {
                           navigateTo(
-                            widget: OngoingDetailsOrderScreen(
+                            widget: OrderDetailsScreen(
                               orderDataModel: cubit.allOngoingOrders[index!],
                               index: index,
                             ),

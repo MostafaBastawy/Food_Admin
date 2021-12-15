@@ -6,11 +6,11 @@ import 'package:food_admin_interface/models/order_model.dart';
 import 'package:food_admin_interface/shared/components/default_divider.dart';
 import 'package:food_admin_interface/shared/design/colors.dart';
 
-class OngoingDetailsOrderScreen extends StatelessWidget {
+class OrderDetailsScreen extends StatelessWidget {
   OrderDataModel? orderDataModel;
   int deliveryFee = 0;
   int? index;
-  OngoingDetailsOrderScreen({
+  OrderDetailsScreen({
     Key? key,
     required this.orderDataModel,
     required this.index,
@@ -32,7 +32,7 @@ class OngoingDetailsOrderScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Padding(
             padding: EdgeInsetsDirectional.only(start: 40.0),
-            child: Text('Ongoing Order'),
+            child: Text('Order Details'),
           ),
         ),
         body: SingleChildScrollView(
