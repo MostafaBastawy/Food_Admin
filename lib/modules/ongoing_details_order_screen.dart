@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/cubit.dart';
 import 'package:food_admin_interface/cubit/states.dart';
 import 'package:food_admin_interface/models/order_model.dart';
+import 'package:food_admin_interface/shared/components/default_divider.dart';
 import 'package:food_admin_interface/shared/design/colors.dart';
 
 class OngoingDetailsOrderScreen extends StatelessWidget {
@@ -105,8 +106,95 @@ class OngoingDetailsOrderScreen extends StatelessWidget {
                 ),
               ),
               Container(
+                color: Colors.white,
+                width: double.infinity,
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.phone,
+                      color: defaultColor,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 15.0),
+                      child: Text(
+                        '${orderDataModel!.orderReceiverNumber}',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const DefaultDivider(),
+              Container(
+                color: Colors.white,
+                width: double.infinity,
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.mail,
+                      color: defaultColor,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 15.0),
+                      child: Text(
+                        '${orderDataModel!.orderReceiverEmail}',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const DefaultDivider(),
+              Container(
+                color: Colors.white,
+                width: double.infinity,
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: defaultColor,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 15.0),
+                      child: Text(
+                        '${orderDataModel!.orderReceiverAddress}',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const DefaultDivider(),
+              Container(
                 color: pastOrderColor,
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    SizedBox(
+                      width: 120.0,
+                      child: Text(
+                        'Items',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      ),
+                    ),
+                    Text(
+                      'Quantity',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 15.0),
+                    ),
+                    SizedBox(
+                      width: 40.0,
+                      child: Text(
+                        'Price',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 width: double.infinity,
