@@ -8,6 +8,7 @@ import 'package:food_admin_interface/shared/design/colors.dart';
 
 class OngoingDetailsOrderScreen extends StatelessWidget {
   OrderDataModel? orderDataModel;
+  int deliveryFee = 0;
   OngoingDetailsOrderScreen({
     Key? key,
     required this.orderDataModel,
@@ -16,6 +17,12 @@ class OngoingDetailsOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppCubit cubit = AppCubit.get(context);
+    if (orderDataModel!.orderType == 'Delivery') {
+      deliveryFee = 15;
+    }
+    {
+      deliveryFee = 0;
+    }
     return BlocBuilder<AppCubit, AppStates>(
       builder: (BuildContext context, state) => Scaffold(
         appBar: AppBar(
@@ -232,6 +239,101 @@ class OngoingDetailsOrderScreen extends StatelessWidget {
                   itemCount: orderDataModel!.orderProducts.length,
                 ),
               ),
+              Container(
+                color: pastOrderColor,
+                width: double.infinity,
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'Subtotal  :  ',
+                          style: TextStyle(fontSize: 17.0),
+                        ),
+                        SizedBox(
+                          width: 50.0,
+                          child: Text(
+                            '\$ ${(int.parse(orderDataModel!.orderTotalValue!) - deliveryFee)}',
+                            style: const TextStyle(fontSize: 17.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'Delivery Fee  :  ',
+                          style: TextStyle(fontSize: 17.0),
+                        ),
+                        SizedBox(
+                          width: 50.0,
+                          child: Text(
+                            '\$ $deliveryFee',
+                            style: const TextStyle(fontSize: 17.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Text(
+                          '+ Service Tax (0%)  :  ',
+                          style: TextStyle(fontSize: 17.0),
+                        ),
+                        SizedBox(
+                          width: 50.0,
+                          child: Text(
+                            '\$ 0',
+                            style: TextStyle(fontSize: 17.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Text(
+                          '- Discount (0%)  :  ',
+                          style: TextStyle(fontSize: 17.0),
+                        ),
+                        SizedBox(
+                          width: 50.0,
+                          child: Text(
+                            '\$ 0',
+                            style: TextStyle(fontSize: 17.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(top: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Text(
+                            'Total  :  ',
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 50.0,
+                            child: Text(
+                              '\$ ${orderDataModel!.orderTotalValue}',
+                              style: const TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const DefaultDivider(),
             ],
           ),
         ),
