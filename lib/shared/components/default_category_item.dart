@@ -33,19 +33,6 @@ class DefaultCatItem extends StatelessWidget {
               fontSize: 20.0,
             ),
           ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 20.0),
-            child: Container(
-              height: 30.0,
-              width: 30.0,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/arrow-icon.png'),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

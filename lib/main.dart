@@ -6,6 +6,7 @@ import 'package:food_admin_interface/cubit/cubit.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_cubit.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_screen.dart';
 import 'package:food_admin_interface/modules/home_layout_screen.dart';
+import 'package:food_admin_interface/shared/components/slider.dart';
 import 'package:food_admin_interface/shared/design/themes.dart';
 import 'package:food_admin_interface/shared/shared_preferences.dart';
 
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: startScreen,
+        home: MMM(),
       ),
     );
   }
