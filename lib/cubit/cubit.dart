@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/states.dart';
+import 'package:food_admin_interface/models/category_model.dart';
 import 'package:food_admin_interface/models/order_model.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -57,6 +58,21 @@ class AppCubit extends Cubit<AppStates> {
       emit((AppUpdateOrderStatusSuccessState()));
     }).catchError((error) {
       emit(AppUpdateOrderStatusErrorState(error.toString()));
+    });
+  }
+
+  List<CategoryDataModel> categories = [];
+
+  void getCategories() {
+    FirebaseFirestore.instance
+        .collection('categories')
+        .snapshots()
+        .listen((event) {
+      categories = [];
+      for (var element in event.docs) {
+        categories.add(CategoryDataModel.fromJson(element.data()));
+      }
+      emit(AppGetCategoriesSuccessState());
     });
   }
 }
