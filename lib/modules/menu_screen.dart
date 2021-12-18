@@ -5,7 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:food_admin_interface/cubit/cubit.dart';
 import 'package:food_admin_interface/cubit/states.dart';
 import 'package:food_admin_interface/modules/add_new_category.dart';
-import 'package:food_admin_interface/modules/add_new_item.dart';
+import 'package:food_admin_interface/modules/add_new_product.dart';
 import 'package:food_admin_interface/shared/components/default_button.dart';
 import 'package:food_admin_interface/shared/components/default_category_item.dart';
 import 'package:food_admin_interface/shared/components/default_drawer.dart';
@@ -94,10 +94,10 @@ class MenuScreen extends StatelessWidget {
                   Expanded(
                     child: DefaultButton(
                       onPressed: () {
-                        navigateTo(widget: AddNewItem(), context: context);
+                        navigateTo(widget: AddNewProduct(), context: context);
                       },
                       color: defaultColor,
-                      labelText: 'Add Item',
+                      labelText: 'Add Product',
                       height: 40.0,
                     ),
                   ),

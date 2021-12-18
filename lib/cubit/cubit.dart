@@ -67,6 +67,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   List<CategoryDataModel> categories = [];
+  List<String> categoriesDropList = [];
 
   void getCategories() {
     FirebaseFirestore.instance
@@ -74,8 +75,12 @@ class AppCubit extends Cubit<AppStates> {
         .snapshots()
         .listen((event) {
       categories = [];
+      categoriesDropList = [];
       for (var element in event.docs) {
         categories.add(CategoryDataModel.fromJson(element.data()));
+      }
+      for (var i in categories) {
+        categoriesDropList.add(i.categoryName.toString());
       }
       emit(AppGetCategoriesSuccessState());
     });
@@ -170,11 +175,21 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void addNewProduct({
-    required String categoryName,
+    required String productName,
+    required String productRecipe,
+    required String productCategory,
+    required int productSmallSizePrice,
+    required int productMediumSizePrice,
+    required int productLargeSizePrice,
   }) {
-    FirebaseFirestore.instance.collection('categories').doc(categoryName).set({
-      'categoryName': categoryName,
-      'categoryImage': categoryImageUrl,
+    FirebaseFirestore.instance.collection('products').doc(productCategory).set({
+      'productName': productName,
+      'productImage': productImageUrl,
+      'productRecipe': productRecipe,
+      'productCategory': productCategory,
+      'productSmallSizePrice': productSmallSizePrice,
+      'productMediumSizePrice': productMediumSizePrice,
+      'productLargeSizePrice': productLargeSizePrice,
     }).then((value) {
       emit(AppAddNewProductSuccessState());
     }).catchError((error) {
