@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/states.dart';
 import 'package:food_admin_interface/models/category_model.dart';
@@ -75,4 +76,6 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppGetCategoriesSuccessState());
     });
   }
+
+  void doNothing(BuildContext context) {}
 }

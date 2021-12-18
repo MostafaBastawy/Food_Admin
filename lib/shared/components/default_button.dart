@@ -4,17 +4,19 @@ class DefaultButton extends StatelessWidget {
   Function onPressed;
   String labelText;
   Color color;
-  DefaultButton(
-      {Key? key,
-      required this.onPressed,
-      required this.labelText,
-      required this.color})
-      : super(key: key);
+  double? height = 55;
+  DefaultButton({
+    Key? key,
+    required this.onPressed,
+    required this.labelText,
+    required this.color,
+    this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55.0,
+      height: height,
       width: double.infinity,
       decoration: BoxDecoration(
         color: color,
@@ -26,7 +28,9 @@ class DefaultButton extends StatelessWidget {
         },
         child: Text(
           labelText,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
     );

@@ -1,10 +1,15 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:food_admin_interface/cubit/cubit.dart';
 import 'package:food_admin_interface/cubit/states.dart';
+import 'package:food_admin_interface/modules/add_new_category.dart';
+import 'package:food_admin_interface/modules/add_new_item.dart';
+import 'package:food_admin_interface/shared/components/default_button.dart';
 import 'package:food_admin_interface/shared/components/default_category_item.dart';
 import 'package:food_admin_interface/shared/components/default_drawer.dart';
+import 'package:food_admin_interface/shared/components/navigator.dart';
 import 'package:food_admin_interface/shared/design/colors.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -33,9 +38,29 @@ class MenuScreen extends StatelessWidget {
                   child: ListView.separated(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) =>
-                        DefaultCatItem(
-                      index: index,
+                    itemBuilder: (BuildContext context, int index) => Slidable(
+                      endActionPane: ActionPane(
+                        motion: const DrawerMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: cubit.doNothing,
+                            backgroundColor: const Color(0xAF1869AA),
+                            foregroundColor: Colors.white,
+                            icon: Icons.edit,
+                            label: 'Edit',
+                          ),
+                          SlidableAction(
+                            onPressed: cubit.doNothing,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            icon: Icons.restore_from_trash,
+                            label: 'Delete',
+                          ),
+                        ],
+                      ),
+                      child: DefaultCatItem(
+                        index: index,
+                      ),
                     ),
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(
@@ -56,44 +81,26 @@ class MenuScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
+                    child: DefaultButton(
+                      onPressed: () {
+                        navigateTo(
+                            widget: const AddNewCategory(), context: context);
+                      },
+                      color: defaultColor,
+                      labelText: 'Add Category',
                       height: 40.0,
-                      decoration: BoxDecoration(
-                        color: defaultColor,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Add Category',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                   const SizedBox(width: 10.0),
                   Expanded(
-                    child: Container(
+                    child: DefaultButton(
+                      onPressed: () {
+                        navigateTo(
+                            widget: const AddNewItem(), context: context);
+                      },
+                      color: defaultColor,
+                      labelText: 'Add Item',
                       height: 40.0,
-                      decoration: BoxDecoration(
-                        color: defaultColor,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Add Item',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                 ],

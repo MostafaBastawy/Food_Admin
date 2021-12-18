@@ -6,6 +6,7 @@ import 'package:food_admin_interface/modules/authentication_screen/authenticatio
 import 'package:food_admin_interface/modules/authentication_screen/authentication_states.dart';
 import 'package:food_admin_interface/modules/home_layout_screen.dart';
 import 'package:food_admin_interface/modules/menu_screen.dart';
+import 'package:food_admin_interface/shared/components/default_button.dart';
 import 'package:food_admin_interface/shared/components/navigator.dart';
 import 'package:food_admin_interface/shared/components/show_toaster.dart';
 import 'package:food_admin_interface/shared/constants.dart';
@@ -209,26 +210,13 @@ class DefaultDrawer extends StatelessWidget {
                   builder: (BuildContext context) => Padding(
                     padding: const EdgeInsetsDirectional.only(
                         bottom: 20.0, start: 20.0, end: 20.0),
-                    child: Container(
+                    child: DefaultButton(
+                      labelText: 'sign out',
+                      onPressed: () {
+                        AppAuthenticationCubit.get(context).userSignOut();
+                      },
+                      color: defaultColor,
                       height: 40.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: defaultColor,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                          AppAuthenticationCubit.get(context).userSignOut();
-                        },
-                        child: const Text(
-                          'sign out',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                   fallback: (BuildContext context) => const Center(

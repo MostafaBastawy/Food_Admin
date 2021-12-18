@@ -6,7 +6,6 @@ import 'package:food_admin_interface/cubit/cubit.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_cubit.dart';
 import 'package:food_admin_interface/modules/authentication_screen/authentication_screen.dart';
 import 'package:food_admin_interface/modules/home_layout_screen.dart';
-import 'package:food_admin_interface/shared/components/slider.dart';
 import 'package:food_admin_interface/shared/design/themes.dart';
 import 'package:food_admin_interface/shared/shared_preferences.dart';
 
@@ -36,18 +35,20 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (BuildContext context) => AppCubit()
-              ..getAllPostOrders()
-              ..getAllOngoingOrders()),
+          create: (BuildContext context) => AppCubit()
+            ..getAllPostOrders()
+            ..getAllOngoingOrders(),
+        ),
         BlocProvider(
-            create: (BuildContext context) => AppAuthenticationCubit()),
+          create: (BuildContext context) => AppAuthenticationCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: MMM(),
+        home: startScreen,
       ),
     );
   }
