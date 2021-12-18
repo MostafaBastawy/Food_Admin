@@ -17,6 +17,8 @@ class AppUpdateOrderStatusErrorState extends AppStates {
   AppUpdateOrderStatusErrorState(this.error);
 }
 
+class AppAddNewCategoryLoadingState extends AppStates {}
+
 class AppAddNewCategorySuccessState extends AppStates {}
 
 class AppAddNewCategoryErrorState extends AppStates {
@@ -45,6 +47,8 @@ class AppUploadProductImageErrorState extends AppStates {
   final String error;
   AppUploadProductImageErrorState(this.error);
 }
+
+class AppAddNewProductLoadingState extends AppStates {}
 
 class AppAddNewProductSuccessState extends AppStates {}
 

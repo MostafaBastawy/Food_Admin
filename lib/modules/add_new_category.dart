@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -114,16 +115,22 @@ class AddNewCategory extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                DefaultButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      cubit.addNewCategory(
-                        categoryName: categoryNameController.text,
-                      );
-                    }
-                  },
-                  labelText: 'Save',
-                  color: defaultColor,
+                ConditionalBuilder(
+                  condition: state is! AppAddNewCategoryLoadingState,
+                  builder: (BuildContext context) => DefaultButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        cubit.addNewCategory(
+                          categoryName: categoryNameController.text,
+                        );
+                      }
+                    },
+                    labelText: 'Save',
+                    color: defaultColor,
+                  ),
+                  fallback: (BuildContext context) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               ],
             ),

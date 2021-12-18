@@ -1,8 +1,11 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/cubit.dart';
 import 'package:food_admin_interface/cubit/states.dart';
+import 'package:food_admin_interface/modules/menu_screen.dart';
 import 'package:food_admin_interface/shared/components/default_button.dart';
+import 'package:food_admin_interface/shared/components/navigator.dart';
 import 'package:food_admin_interface/shared/components/show_toaster.dart';
 import 'package:food_admin_interface/shared/constants.dart';
 import 'package:food_admin_interface/shared/design/colors.dart';
@@ -21,7 +24,28 @@ class AddNewProduct extends StatelessWidget {
     AppCubit cubit = AppCubit.get(context);
     String? categoryName = cubit.categoriesDropList.first;
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, state) {},
+      listener: (BuildContext context, state) {
+        if (state is AppAddNewProductSuccessState) {
+          defaultToast(
+            message:
+                '${productNameController.text} category added successfully',
+            color: Colors.green,
+            context: context,
+          );
+          productNameController.text = '';
+          cubit.productImageUrl = '';
+
+          navigateAndFinish(widget: const MenuScreen(), context: context);
+        }
+        if (state is AppAddNewProductErrorState) {
+          defaultToast(
+            message: state.error.substring(30),
+            color: Colors.red,
+            context: context,
+          );
+          navigateAndFinish(widget: const MenuScreen(), context: context);
+        }
+      },
       builder: (BuildContext context, state) => Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -98,7 +122,10 @@ class AddNewProduct extends StatelessWidget {
                               underline: Container(
                                 height: 0.0,
                               ),
-                              onChanged: (String? value) {},
+                              onChanged: (String? value) {
+                                categoryName = value.toString();
+                                cubit.emit(AppRefreshState());
+                              },
                               items: cubit.categoriesDropList
                                   .map<DropdownMenuItem<String>>(
                                     (String value) => DropdownMenuItem<String>(
@@ -232,24 +259,30 @@ class AddNewProduct extends StatelessWidget {
                       ),
                     ),
                   ),
-                  DefaultButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        cubit.addNewProduct(
-                          productName: productNameController.text,
-                          productRecipe: productRecipeController.text,
-                          productCategory: categoryName,
-                          productSmallSizePrice:
-                              int.parse(productSmallSizePriceController.text),
-                          productMediumSizePrice:
-                              int.parse(productMediumSizePriceController.text),
-                          productLargeSizePrice:
-                              int.parse(productLargeSizePriceController.text),
-                        );
-                      }
-                    },
-                    labelText: 'Save',
-                    color: defaultColor,
+                  ConditionalBuilder(
+                    condition: state is! AppAddNewProductLoadingState,
+                    builder: (BuildContext context) => DefaultButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          cubit.addNewProduct(
+                            productName: productNameController.text,
+                            productRecipe: productRecipeController.text,
+                            productCategory: categoryName.toString(),
+                            productSmallSizePrice:
+                                int.parse(productSmallSizePriceController.text),
+                            productMediumSizePrice: int.parse(
+                                productMediumSizePriceController.text),
+                            productLargeSizePrice:
+                                int.parse(productLargeSizePriceController.text),
+                          );
+                        }
+                      },
+                      labelText: 'Save',
+                      color: defaultColor,
+                    ),
+                    fallback: (BuildContext context) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 ],
               ),

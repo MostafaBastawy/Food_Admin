@@ -89,6 +89,7 @@ class AppCubit extends Cubit<AppStates> {
   void addNewCategory({
     required String categoryName,
   }) {
+    emit(AppAddNewCategoryLoadingState());
     FirebaseFirestore.instance.collection('categories').doc(categoryName).set({
       'categoryName': categoryName,
       'categoryImage': categoryImageUrl,
@@ -182,7 +183,8 @@ class AppCubit extends Cubit<AppStates> {
     required int productMediumSizePrice,
     required int productLargeSizePrice,
   }) {
-    FirebaseFirestore.instance.collection('products').doc(productCategory).set({
+    emit(AppAddNewProductLoadingState());
+    FirebaseFirestore.instance.collection('products').doc(productName).set({
       'productName': productName,
       'productImage': productImageUrl,
       'productRecipe': productRecipe,
