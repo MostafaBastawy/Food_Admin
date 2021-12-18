@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_admin_interface/cubit/states.dart';
 import 'package:food_admin_interface/models/category_model.dart';
 import 'package:food_admin_interface/models/order_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -74,6 +78,107 @@ class AppCubit extends Cubit<AppStates> {
         categories.add(CategoryDataModel.fromJson(element.data()));
       }
       emit(AppGetCategoriesSuccessState());
+    });
+  }
+
+  void addNewCategory({
+    required String categoryName,
+  }) {
+    FirebaseFirestore.instance.collection('categories').doc(categoryName).set({
+      'categoryName': categoryName,
+      'categoryImage': categoryImageUrl,
+    }).then((value) {
+      emit(AppAddNewCategorySuccessState());
+    }).catchError((error) {
+      emit(AppAddNewCategoryErrorState(error.toString()));
+    });
+  }
+
+  File? categoryImage;
+  String categoryImageUrl = '';
+  var picker = ImagePicker();
+
+  Future<void> getCategoryImage({
+    required String categoryName,
+  }) async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      categoryImage = File(pickedFile.path);
+      emit(AppGetCategoryImageSuccessState());
+      uploadCategoryImage(categoryName: categoryName);
+    } else {
+      emit(AppGetCategoryImageErrorState());
+    }
+  }
+
+  void uploadCategoryImage({
+    required String categoryName,
+  }) {
+    if (categoryImage != null) {
+      firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child(categoryName)
+          .child('$categoryName.jpg')
+          .putFile(categoryImage!)
+          .then((value) {
+        value.ref.getDownloadURL().then((value) {
+          categoryImageUrl = value;
+        }).catchError((error) {
+          emit(AppUploadCategoryImageErrorState(error.toString()));
+        });
+      }).catchError((error) {
+        emit(AppUploadCategoryImageErrorState(error.toString()));
+      });
+    }
+  }
+
+  File? productImage;
+  String productImageUrl = '';
+
+  Future<void> getProductImage({
+    required String productName,
+  }) async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      productImage = File(pickedFile.path);
+      emit(AppGetProductImageSuccessState());
+      uploadProductImage(productName: productName);
+    } else {
+      emit(AppGetProductImageErrorState());
+    }
+  }
+
+  void uploadProductImage({
+    required String productName,
+  }) {
+    if (productImage != null) {
+      firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child(productName)
+          .child('$productName.jpg')
+          .putFile(productImage!)
+          .then((value) {
+        value.ref.getDownloadURL().then((value) {
+          productImageUrl = value;
+        }).catchError((error) {
+          emit(AppUploadProductImageErrorState(error.toString()));
+        });
+      }).catchError((error) {
+        emit(AppUploadProductImageErrorState(error.toString()));
+      });
+    }
+  }
+
+  void addNewProduct({
+    required String categoryName,
+  }) {
+    FirebaseFirestore.instance.collection('categories').doc(categoryName).set({
+      'categoryName': categoryName,
+      'categoryImage': categoryImageUrl,
+    }).then((value) {
+      emit(AppAddNewProductSuccessState());
+    }).catchError((error) {
+      emit(AppAddNewProductErrorState(error.toString()));
     });
   }
 

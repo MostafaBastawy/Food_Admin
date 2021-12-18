@@ -83,8 +83,7 @@ class MenuScreen extends StatelessWidget {
                   Expanded(
                     child: DefaultButton(
                       onPressed: () {
-                        navigateTo(
-                            widget: const AddNewCategory(), context: context);
+                        navigateTo(widget: AddNewCategory(), context: context);
                       },
                       color: defaultColor,
                       labelText: 'Add Category',
@@ -95,8 +94,7 @@ class MenuScreen extends StatelessWidget {
                   Expanded(
                     child: DefaultButton(
                       onPressed: () {
-                        navigateTo(
-                            widget: const AddNewItem(), context: context);
+                        navigateTo(widget: AddNewItem(), context: context);
                       },
                       color: defaultColor,
                       labelText: 'Add Item',
