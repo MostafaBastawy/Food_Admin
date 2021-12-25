@@ -69,21 +69,29 @@ class AddNewCategory extends StatelessWidget {
                           context: context);
                     }
                   },
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(top: 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        image: DecorationImage(
-                          image: cubit.categoryImageUrl.isNotEmpty
-                              ? NetworkImage(cubit.categoryImageUrl)
-                              : const NetworkImage(defaultNewCatPro),
-                          fit: BoxFit.fill,
+                  child: ConditionalBuilder(
+                    condition: state is! AppGetCategoriesLoadingState,
+
+                    builder: (BuildContext context) =>Padding(
+                      padding: const EdgeInsetsDirectional.only(top: 20.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: DecorationImage(
+                            image: cubit.categoryImageUrl.isNotEmpty
+                                ? NetworkImage(cubit.categoryImageUrl)
+                                : const NetworkImage(defaultNewCatPro),
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),
+                    fallback: (BuildContext context) =>SizedBox(
+                      width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        child:  const Center(child: CircularProgressIndicator(),)),
                   ),
                 ),
                 Padding(
@@ -120,9 +128,13 @@ class AddNewCategory extends StatelessWidget {
                   builder: (BuildContext context) => DefaultButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        cubit.addNewCategory(
-                          categoryName: categoryNameController.text,
-                        );
+                        if(cubit.categoryImageUrl.isNotEmpty){
+                          cubit.addNewCategory(
+                            categoryName: categoryNameController.text,
+                          );
+                        }
+
+
                       }
                     },
                     labelText: 'Save',

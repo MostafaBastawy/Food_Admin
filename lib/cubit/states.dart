@@ -8,7 +8,10 @@ class AppGetAllOngoingOrdersSuccessState extends AppStates {}
 
 class AppGetAllPostOrdersSuccessState extends AppStates {}
 
+class AppGetCategoriesLoadingState extends AppStates {}
+
 class AppGetCategoriesSuccessState extends AppStates {}
+
 
 class AppUpdateOrderStatusSuccessState extends AppStates {}
 

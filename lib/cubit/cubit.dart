@@ -107,10 +107,10 @@ class AppCubit extends Cubit<AppStates> {
   Future<void> getCategoryImage({
     required String categoryName,
   }) async {
+    emit(AppGetCategoriesLoadingState());
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       categoryImage = File(pickedFile.path);
-      emit(AppGetCategoryImageSuccessState());
       uploadCategoryImage(categoryName: categoryName);
     } else {
       emit(AppGetCategoryImageErrorState());
@@ -129,6 +129,7 @@ class AppCubit extends Cubit<AppStates> {
           .then((value) {
         value.ref.getDownloadURL().then((value) {
           categoryImageUrl = value;
+          emit(AppUploadCategoryImageSuccessState());
         }).catchError((error) {
           emit(AppUploadCategoryImageErrorState(error.toString()));
         });

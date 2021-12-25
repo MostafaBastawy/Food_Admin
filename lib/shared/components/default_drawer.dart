@@ -26,10 +26,7 @@ class DefaultDrawer extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                navigateAndFinish(
-                  widget: HomeLayoutScreen(),
-                  context: context,
-                );
+
               },
               child: Column(
                 children: const [
