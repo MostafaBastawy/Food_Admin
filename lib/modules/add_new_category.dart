@@ -58,15 +58,21 @@ class AddNewCategory extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    if (categoryNameController.text != '') {
+                    if (categoryNameController.text == '' ) {
+                      defaultToast(
+                        message: 'category name must be entered first',
+                        color: Colors.red,
+                        context: context,);
+
+                    } else if (cubit.categoriesDropList.contains(categoryNameController.text)) {
+                      defaultToast(
+                        message: 'category name already exist',
+                        color: Colors.red,
+                        context: context,);
+                    }else{
                       cubit.getCategoryImage(
                         categoryName: categoryNameController.text,
                       );
-                    } else {
-                      defaultToast(
-                          message: 'category name must be entered first',
-                          color: Colors.red,
-                          context: context);
                     }
                   },
                   child: ConditionalBuilder(

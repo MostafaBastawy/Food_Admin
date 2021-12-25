@@ -40,6 +40,8 @@ class AppUploadCategoryImageErrorState extends AppStates {
   AppUploadCategoryImageErrorState(this.error);
 }
 
+class AppGetProductImageLoadingState extends AppStates {}
+
 class AppGetProductImageSuccessState extends AppStates {}
 
 class AppGetProductImageErrorState extends AppStates {}

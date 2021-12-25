@@ -144,12 +144,13 @@ class AppCubit extends Cubit<AppStates> {
 
   Future<void> getProductImage({
     required String productName,
+    required String categoryName,
   }) async {
+    emit(AppGetProductImageLoadingState());
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       productImage = File(pickedFile.path);
-      emit(AppGetProductImageSuccessState());
-      uploadProductImage(productName: productName);
+      uploadProductImage(productName: productName,categoryName: categoryName,);
     } else {
       emit(AppGetProductImageErrorState());
     }
@@ -157,16 +158,18 @@ class AppCubit extends Cubit<AppStates> {
 
   void uploadProductImage({
     required String productName,
+    required String categoryName,
   }) {
     if (productImage != null) {
       firebase_storage.FirebaseStorage.instance
           .ref()
-          .child(productName)
+          .child(categoryName)
           .child('$productName.jpg')
           .putFile(productImage!)
           .then((value) {
         value.ref.getDownloadURL().then((value) {
           productImageUrl = value;
+          emit(AppUploadProductImageSuccessState());
         }).catchError((error) {
           emit(AppUploadProductImageErrorState(error.toString()));
         });
@@ -180,9 +183,9 @@ class AppCubit extends Cubit<AppStates> {
     required String productName,
     required String productRecipe,
     required String productCategory,
-    required int productSmallSizePrice,
-    required int productMediumSizePrice,
-    required int productLargeSizePrice,
+    required int? productSmallSizePrice,
+    required int? productMediumSizePrice,
+    required int? productLargeSizePrice,
   }) {
     emit(AppAddNewProductLoadingState());
     FirebaseFirestore.instance.collection('products').doc(productName).set({

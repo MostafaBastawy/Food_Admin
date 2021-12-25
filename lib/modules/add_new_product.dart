@@ -23,6 +23,10 @@ class AddNewProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     AppCubit cubit = AppCubit.get(context);
     String? categoryName = cubit.categoriesDropList.first;
+    String smallPrice = '';
+    String mediumPrice = '';
+    String largePrice = '';
+
     return BlocConsumer<AppCubit, AppStates>(
       listener: (BuildContext context, state) {
         if (state is AppAddNewProductSuccessState) {
@@ -63,9 +67,11 @@ class AddNewProduct extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (productNameController.text != '') {
+
+                      if (productNameController.text != '' ) {
                         cubit.getProductImage(
                           productName: productNameController.text,
+                          categoryName: categoryName.toString(),
                         );
                       } else {
                         defaultToast(
@@ -75,21 +81,30 @@ class AddNewProduct extends StatelessWidget {
                         );
                       }
                     },
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.only(top: 20.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.25,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: DecorationImage(
-                            image: cubit.productImageUrl.isNotEmpty
-                                ? NetworkImage(cubit.productImageUrl)
-                                : const NetworkImage(defaultNewCatPro),
-                            fit: BoxFit.fill,
+                    child: ConditionalBuilder(
+
+                      condition: state is! AppGetProductImageLoadingState,
+                      builder: (BuildContext context) =>Padding(
+                        padding: const EdgeInsetsDirectional.only(top: 20.0),
+                        child: Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.25,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              image: cubit.productImageUrl.isNotEmpty
+                                  ? NetworkImage(cubit.productImageUrl)
+                                  : const NetworkImage(defaultNewCatPro),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
-                      ),
+                      ), fallback: (BuildContext context) =>SizedBox(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      child:const Center(child: CircularProgressIndicator(),),
+
+                    ),
                     ),
                   ),
                   Padding(
@@ -184,8 +199,10 @@ class AddNewProduct extends StatelessWidget {
                         floatingLabelStyle: TextStyle(color: defaultColor),
                       ),
                       onTap: () {},
-                      onChanged: (value) {},
-                      onFieldSubmitted: (value) {},
+                      onChanged: ( value) {
+                        smallPrice = value;
+                      },
+                      onFieldSubmitted: ( value) {},
                     ),
                   ),
                   Padding(
@@ -206,7 +223,7 @@ class AddNewProduct extends StatelessWidget {
                           floatingLabelStyle: TextStyle(color: defaultColor),
                         ),
                         onTap: () {},
-                        onChanged: (value) {},
+                        onChanged: (value) {mediumPrice = value;},
                         onFieldSubmitted: (value) {},
                       ),
                     ),
@@ -219,6 +236,7 @@ class AddNewProduct extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
+
                       controller: productLargeSizePriceController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
@@ -227,7 +245,7 @@ class AddNewProduct extends StatelessWidget {
                         floatingLabelStyle: TextStyle(color: defaultColor),
                       ),
                       onTap: () {},
-                      onChanged: (value) {},
+                      onChanged: (value) {largePrice = value;},
                       onFieldSubmitted: (value) {},
                     ),
                   ),
@@ -263,18 +281,19 @@ class AddNewProduct extends StatelessWidget {
                     condition: state is! AppAddNewProductLoadingState,
                     builder: (BuildContext context) => DefaultButton(
                       onPressed: () {
+
                         if (formKey.currentState!.validate()) {
-                          cubit.addNewProduct(
-                            productName: productNameController.text,
-                            productRecipe: productRecipeController.text,
-                            productCategory: categoryName.toString(),
-                            productSmallSizePrice:
-                                int.parse(productSmallSizePriceController.text),
-                            productMediumSizePrice: int.parse(
-                                productMediumSizePriceController.text),
-                            productLargeSizePrice:
-                                int.parse(productLargeSizePriceController.text),
-                          );
+                          if(cubit.productImageUrl.isNotEmpty){
+                            cubit.addNewProduct(
+                              productName: productNameController.text,
+                              productRecipe: productRecipeController.text,
+                              productCategory: categoryName.toString(),
+                              productSmallSizePrice:smallPrice.isNotEmpty ? int.parse(smallPrice) : null,
+                              productMediumSizePrice:mediumPrice.isNotEmpty ? int.parse(mediumPrice) : null ,
+                              productLargeSizePrice:largePrice.isNotEmpty ? int.parse(largePrice) : null ,
+
+                            );
+                          }
                         }
                       },
                       labelText: 'Save',
